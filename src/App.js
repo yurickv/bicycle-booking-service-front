@@ -11,6 +11,7 @@ import {
   changeBike,
   addBike,
 } from "./service/bikeServiceAPI";
+import sortBikes from "./helpers/sortBikesList";
 
 function App() {
   // const { bikesList, isLoading, error, deleteBikes } = useFetchBikes();
@@ -18,7 +19,7 @@ function App() {
   const [bikesList, setBikesList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [statistic, setStatistic] = useState(null);
+  const [statistic, setStatistic] = useState({});
 
   useEffect(() => {
     const controller = new AbortController();
@@ -27,7 +28,8 @@ function App() {
         setIsLoading(true);
 
         const fetchedBikes = await getAllBikes(controller);
-        setBikesList(fetchedBikes);
+        setStatistic(fetchedBikes.statistic);
+        setBikesList(sortBikes(fetchedBikes.data));
       } catch (error) {
         setError(error.message);
       } finally {
@@ -36,20 +38,24 @@ function App() {
       }
     };
     fetchData();
-    // return () => {
-    //     controller.abort();
-    // };
   }, []);
 
   const deleteBikes = async (id) => {
     const controller = new AbortController();
     try {
       const deletedBike = await deleteBike(controller, id);
-      console.log("delete bike", deletedBike);
+      if (deletedBike) {
+        setError(null);
+        setIsLoading(true);
+
+        const fetchedBikes = await getAllBikes(controller);
+        setStatistic(fetchedBikes.statistic);
+        setBikesList(sortBikes(fetchedBikes.data));
+      }
     } catch (error) {
       setError(error.message);
     } finally {
-      setBikesList((prev) => prev.filter((e) => e._id !== id));
+      setIsLoading(false);
       controller.abort();
     }
   };
@@ -58,15 +64,22 @@ function App() {
     try {
       const updatedBike = await changeBike(controller, _id, newStatusBike);
       if (updatedBike) {
-        setBikesList((prev) =>
-          prev.map((bike) =>
-            bike._id === _id ? { ...bike, status: newStatusBike.status } : bike
-          )
-        );
+        // setBikesList((prev) =>
+        //   prev.map((bike) =>
+        //     bike._id === _id ? { ...bike, status: newStatusBike.status } : bike
+        //   )
+        // );
+        setError(null);
+        setIsLoading(true);
+
+        const fetchedBikes = await getAllBikes(controller);
+        setStatistic(fetchedBikes.statistic);
+        setBikesList(sortBikes(fetchedBikes.data));
       }
     } catch (error) {
       setError(error.message);
     } finally {
+      setIsLoading(false);
       controller.abort();
     }
   };
@@ -76,17 +89,23 @@ function App() {
     try {
       const addedNewBike = await addBike(controller, newBike);
       if (addedNewBike) {
-        setBikesList((prevBikesList) => [...prevBikesList, addedNewBike]);
+        // setBikesList((prevBikesList) => [...prevBikesList, addedNewBike]);
+        setError(null);
+        setIsLoading(true);
+        const fetchedBikes = await getAllBikes(controller);
+        setStatistic(fetchedBikes.statistic);
+        setBikesList(sortBikes(fetchedBikes.data));
       }
     } catch (error) {
       setError(error.message);
     } finally {
+      setIsLoading(false);
       controller.abort();
     }
   };
 
   return (
-    <div className="App">
+    <>
       <header className="App-header">Admin. Bicycle booking service</header>
       <main>
         <section className="section-main">
@@ -107,7 +126,13 @@ function App() {
           </div>
         </section>
       </main>
-    </div>
+      <footer className="App-footer">
+        <p>&copy; 2023 Bicycle Booking Service</p>
+        <h3 className="author">
+          Developer: <span className="author-name">Teslyuk Yuriy</span>
+        </h3>
+      </footer>
+    </>
   );
 }
 

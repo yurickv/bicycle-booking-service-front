@@ -1,7 +1,3 @@
-.App {
-  text-align: center;
-}
-
 .section-main {
   padding: 24px;
   display: flex;
@@ -22,16 +18,38 @@
 } */
 
 .App-header {
-  background-color: #282c34;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background-color: #696969;
+  padding: 4px 16px;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #e8e8e8;
+  /* font-family: Saira Stencil One; */
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
 }
-
+.App-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #696969;
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 20px);
+}
+.author {
+  color: #cbcaca;
+  /* font-family: Saira; */
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+}
+.author-name {
+  color: #fff;
+  /* font-family: Saira; */
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+}
 /* @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
