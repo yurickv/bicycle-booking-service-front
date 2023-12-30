@@ -3,7 +3,13 @@ import { useState, useEffect } from "react";
 import { Loader } from "./components/loader/loader";
 // import { useFetchBikes } from "./hooks/useFetchBikes";
 import { BikesList } from "./components/bikesList/bikesList";
-import { getAllBikes, deleteBike } from "./service/bikeServiceAPI";
+import {
+  getAllBikes,
+  deleteBike,
+  changeBike,
+  addBike,
+} from "./service/bikeServiceAPI";
+import { FormAddBike } from "./components/formAddBike/formAddBike";
 
 function App() {
   // const { bikesList, isLoading, error, deleteBikes } = useFetchBikes();
@@ -34,7 +40,6 @@ function App() {
   }, []);
 
   const deleteBikes = async (id) => {
-    console.log(id);
     const controller = new AbortController();
     try {
       const deletedBike = await deleteBike(controller, id);
@@ -46,19 +51,57 @@ function App() {
       controller.abort();
     }
   };
+  const updateBike = async (_id, newStatusBike) => {
+    const controller = new AbortController();
+    try {
+      const updatedBike = await changeBike(controller, _id, newStatusBike);
+      if (updatedBike) {
+        setBikesList((prev) =>
+          prev.map((bike) =>
+            bike._id === _id ? { ...bike, status: newStatusBike.status } : bike
+          )
+        );
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      controller.abort();
+    }
+  };
+  const newBike = async (newBike) => {
+    console.log(newBike);
+    const controller = new AbortController();
+    try {
+      const addedNewBike = await addBike(controller, newBike);
+      if (addedNewBike) {
+        setBikesList((prevBikesList) => [...prevBikesList, addedNewBike]);
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      controller.abort();
+    }
+  };
 
   return (
     <div className="App">
-      <header className="App-header">Admin</header>
+      <header className="App-header">Admin. Bicycle booking service</header>
       <main>
         <section className="section-main">
-          {" "}
-          <h1>Bicycle booking service</h1>
-          {isLoading && <Loader />}
-          {error && <h2>{error}</h2>}
-          {bikesList.length && (
-            <BikesList bikes={bikesList} deleteBikes={deleteBikes} />
-          )}
+          <div className="bike-list-div">
+            {isLoading && <Loader />}
+            {error && <h2>{error}</h2>}
+            {bikesList.length && (
+              <BikesList
+                bikes={bikesList}
+                deleteBikes={deleteBikes}
+                updateBike={updateBike}
+              />
+            )}
+          </div>
+          <div>
+            <FormAddBike newBike={newBike} />
+          </div>
         </section>
       </main>
     </div>
