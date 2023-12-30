@@ -100,11 +100,12 @@ export const FormAddBike = ({ newBike }) => {
             required
           />
           <Field
-            className="input"
+            as="textarea"
+            className="input-descrition"
             type="text"
             name="description"
             minLength="5"
-            maxLength="25"
+            maxLength="250"
             placeholder="Description"
             title="Description may contain only letters, apostrophe, dash and spaces."
             required

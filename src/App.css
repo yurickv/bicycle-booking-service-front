@@ -8,6 +8,11 @@
 }
 .bike-list-div {
   min-width: 500px;
+  padding-right: 10px;
+  border-right: 1px solid #c4c4c4;
+}
+.bike-service-div {
+  padding-left: 10px;
 }
 /* 
 @media (prefers-reduced-motion: no-preference) {

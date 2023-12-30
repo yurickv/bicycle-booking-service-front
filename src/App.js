@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import { Loader } from "./components/loader/loader";
 // import { useFetchBikes } from "./hooks/useFetchBikes";
 import { BikesList } from "./components/bikesList/bikesList";
+import { FormAddBike } from "./components/formAddBike/formAddBike";
+import { Statistic } from "./components/statistic/statistic";
 import {
   getAllBikes,
   deleteBike,
   changeBike,
   addBike,
 } from "./service/bikeServiceAPI";
-import { FormAddBike } from "./components/formAddBike/formAddBike";
 
 function App() {
   // const { bikesList, isLoading, error, deleteBikes } = useFetchBikes();
@@ -17,6 +18,7 @@ function App() {
   const [bikesList, setBikesList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [statistic, setStatistic] = useState(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -99,8 +101,9 @@ function App() {
               />
             )}
           </div>
-          <div>
+          <div className="bike-service-div">
             <FormAddBike newBike={newBike} />
+            <Statistic statistic={statistic} />
           </div>
         </section>
       </main>
