@@ -1,11 +1,11 @@
 import "./bikeList.css";
 import { IoCloseSharp } from "react-icons/io5";
 
-export const BikesList = ({ bikes, deleteBike }) => {
+export const BikesList = ({ bikes, deleteBikes }) => {
   return (
     <ul className="bike-list">
-      {bikes.map(({ name, number, type, color, wheel, price, status }) => (
-        <li key={number} className="bike-item">
+      {bikes.map(({ name, number, type, color, _id, price, status }) => (
+        <li key={_id} className="bike-item">
           <div className="info-block">
             <div className="bike-name">
               <h3 className="bike-title">{name}</h3>{" "}
@@ -19,7 +19,7 @@ export const BikesList = ({ bikes, deleteBike }) => {
           <div className="price-block">
             <button
               type="button"
-              onClick={() => deleteBike(number)}
+              onClick={() => deleteBikes(_id)}
               className="button-delete"
             >
               <IoCloseSharp />
