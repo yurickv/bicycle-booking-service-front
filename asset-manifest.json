@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/bicycle-booking-service-front/static/css/main.b99659a2.css",
-    "main.js": "/bicycle-booking-service-front/static/js/main.4a3ee50c.js",
+    "main.js": "/bicycle-booking-service-front/static/js/main.ac9a0fb7.js",
     "index.html": "/bicycle-booking-service-front/index.html",
     "main.b99659a2.css.map": "/bicycle-booking-service-front/static/css/main.b99659a2.css.map",
-    "main.4a3ee50c.js.map": "/bicycle-booking-service-front/static/js/main.4a3ee50c.js.map"
+    "main.ac9a0fb7.js.map": "/bicycle-booking-service-front/static/js/main.ac9a0fb7.js.map"
   },
   "entrypoints": [
     "static/css/main.b99659a2.css",
-    "static/js/main.4a3ee50c.js"
+    "static/js/main.ac9a0fb7.js"
   ]
 }
