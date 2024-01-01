@@ -41,6 +41,13 @@ function App() {
   }, []);
 
   const deleteBikes = async (id) => {
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this bike?"
+    );
+
+    if (!shouldDelete) {
+      return;
+    }
     const controller = new AbortController();
     try {
       const deletedBike = await deleteBike(controller, id);
@@ -84,7 +91,14 @@ function App() {
     }
   };
   const newBike = async (newBike) => {
-    console.log(newBike);
+    const existingBike = bikesList.find(
+      (bike) => bike.number === newBike.number
+    );
+    if (existingBike) {
+      alert(`Bike with ID ${newBike.number} already exists.`);
+      return;
+    }
+
     const controller = new AbortController();
     try {
       const addedNewBike = await addBike(controller, newBike);
